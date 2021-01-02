@@ -4,6 +4,9 @@ import { UserOutlined, LaptopOutlined, NotificationOutlined, UploadOutlined } fr
 import { Form, Input, Button, Checkbox, Row, Col, Upload, Radio, Select, DatePicker } from 'antd';
 import validateFields, { FormProps } from 'antd/lib/form'
 import DynamicFieldSet from '../dynamicField';
+import BirthDateComp from '../birthDate';
+import moment from 'moment';
+
 // import { gutter, calculateSpan } from '../commonImports/responsiveSettings';
 // import PhoneInput from 'react-phone-input-2'
 
@@ -134,6 +137,8 @@ const CustomForm = (props) => {
   const [form] = Form.useForm();
 
   const [uploadList, setuploadList] = useState(props.photoArr ? props.photoArr : [])
+  const [uploadListPicture, setuploadListPicture] = useState(props.photoArr ? props.photoArr : [])
+
 
 
   // validateFields(props)
@@ -182,6 +187,12 @@ const CustomForm = (props) => {
     // console.log(file)
     setuploadList(file.fileList)
   }
+
+  const handleUploadChangePicture = (file) => {
+    // console.log(file)
+    setuploadListPicture(file.fileList)
+  }
+
   const onFeildChange = (val, type) => {
     // console.log('props.....',props)
     if (props.onChangeMob) {
@@ -240,7 +251,7 @@ const CustomForm = (props) => {
             case 'mobile':
               elem = (
                 // <PhoneInput country={'in'} placeholder={p.placeholder} onChange={(val, type) => onFeildChange(val, type)} />
-                <Input.Password placeholder={p.name}/>
+                <Input placeholder={p.name}/>
               )
               break;
 
@@ -256,7 +267,7 @@ const CustomForm = (props) => {
                   // beforeUpload={beforeUpload}
                   onChange={handleUploadChange}
                 >
-                  {uploadList.length > 0 ? null : uploadButton}
+                  {uploadList.length >= (p.limit ? p.limit : 0) ? null : uploadButton}
                 </Upload>
               )
               break;
@@ -269,12 +280,12 @@ const CustomForm = (props) => {
                   listType="picture"
                   className="avatar-uploader"
                   // showUploadList={false}
-                  defaultFileList={uploadList}
+                  defaultFileList={uploadListPicture}
                   //  fileList={uploadList}
                   // beforeUpload={beforeUpload}
-                  onChange={handleUploadChange}
+                  onChange={handleUploadChangePicture}
                 >
-                  {uploadList.length > 0 ? uploadButtonPicture(true) : uploadButtonPicture(false)}
+                  {uploadListPicture.length >= (p.limit ? p.limit : 0) ? uploadButtonPicture(true) : uploadButtonPicture(false)}
                 </Upload>
               )
               break;
@@ -310,21 +321,13 @@ const CustomForm = (props) => {
               elem = (
                 <Select
                   mode="multiple"
+                  placeholder={p.label}
                   style={{ width: p.width ? p.width : '100%' }}>
                   {p.values &&
                     p.values.map((o) => {
-                      // console.log(typeof o)
-                      if (typeof o == 'string') {
-                        return (
-                          <Option value={o.toUpperCase()}>{o}</Option>
-                        )
-                      } else if (typeof o == 'object') {
-                        // console.log('o', o)
-                        return (
-                          <Option value={o.slugName.toUpperCase()}>{o.value.toUpperCase()}</Option>
-                        )
-                      }
-
+                      return(
+                        <Option value={o.value} key={o.value}>{o.label}</Option>
+                      )
                     })
                   }
                 </Select>)
@@ -339,16 +342,15 @@ const CustomForm = (props) => {
               elem = (
                 <DatePicker onChange={(date, val) => {
                   if (props.onChange) {
-
                     props.onChange(date, val)
                   }
                 }} format={dateFormat} style={{ width: '100%' }} />)
               break;
+
             case 'daterangepicker':
               elem = (
                 <RangePicker onChange={(date, val) => {
                   if (props.onChange) {
-
                     props.onChange(date, val)
                   }
                 }} format={dateFormat} style={{ width: '100%' }} />)
@@ -359,7 +361,6 @@ const CustomForm = (props) => {
               elem = (
                 <DatePicker onChange={(val) => {
                   if (props.onChange) {
-
                     props.onChange(val)
                   }
                 }} format={dateFormat} style={{ width: '100%' }} />)
@@ -380,9 +381,21 @@ const CustomForm = (props) => {
                 <Input.TextArea placeholder={p.placeholder ? p.placeholder : p.name} />)
               break;
 
+            case 'birthDate':
+              elem = (
+                <BirthDateComp
+                fieldName={p.name}
+                date={props.form ? props.form.getFieldValue(p.name) : ''}
+                onChange={(val) => {
+                  if(props.form){
+                    props.form.setFieldsValue({
+                      [p.name]: moment(val).format('YYYY-MM-DD')
+                    })
+                  }
+                }} />)
+              break;
             default:
           }
-
 
           return (
             <>

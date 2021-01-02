@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import CustomForm from '../index';
 import * as fields from './fields';
 import { Button, Form, Card } from 'antd'
-import BirthDateComp from '../../birthDate'
 
 const BasicRegistrationForm=()=>{
     const [form] = Form.useForm();
@@ -24,20 +23,10 @@ const BasicRegistrationForm=()=>{
                 <h2>User Registration</h2>
                 {/* fields props is an array of objects */}
                 <CustomForm
+                    form={form}
                     columns={2}
                     fields={fields.fieldsArr}
                 />
-                <div style={{width:'20%'}}>
-
-                 <BirthDateComp
-                    date={'12-Dec-1989'}
-                    // onChange={(val)=>{}}
-                    form={form} 
-                    fieldName={fields.fieldsBirthDate}
-                    getBirthDate={(val) => {
-                        console.log(val)
-                    }} />
-                </div>
                 <Button type="primary" htmlType="submit">Register</Button>
             </Form>
         </Card>

@@ -74,6 +74,7 @@ import moment from 'moment'
 
 render(){
   const { years, months, dates, selecetdYear, selectedMonth,selectedDate } = this.state;
+
   let value = null;
   if(selecetdYear != null && selectedMonth != null && selectedDate != null){
     value = selecetdYear+'-'+selectedMonth+'-'+selectedDate;
@@ -112,15 +113,11 @@ render(){
     }
   }
 
-  if(selecetdYear != null && selectedMonth != null && selectedDate != null && this.props.form){
-      this.props.form.setFieldsValue({
-        [this.props.fieldName]: `${selecetdYear}-${moment(selecetdYear).month(selectedMonth).format("MM")}-${selectedDate}`
-      })
-  
-      if(this.props.getBirthDate){
+  if(selecetdYear != null && selectedMonth != null && selectedDate != null){
+      if(this.props.onChange){
         // console.log('selecetdYear',selecetdYear,selectedMonth,selectedDate)
 
-        this.props.getBirthDate(`${selecetdYear}-${moment(selecetdYear).month(selectedMonth).format("MM")}-${selectedDate}`)
+        this.props.onChange(moment(`${selecetdYear}-${moment(selecetdYear).month(selectedMonth).format("MM")}-${selectedDate}`))
       }
   }
 

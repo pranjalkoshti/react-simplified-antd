@@ -5,15 +5,28 @@ export {
     lName,
     email,
     fieldsArr,
-    fieldsBirthDate
+    fieldsBirthDate,
+    areasOfInterests
 }
 const genderValues = ['MALE', 'FEMALE', 'OTHER']
+
+
+const areasOfInterests = [{
+  type: 'multiselect',
+  label: 'Areas of Interest',
+  name: 'areasOfInterest',
+  required: false,
+  message: 'Please upload photo',
+  values:[{label: 'Politics', value:'politics'}, { label: 'Science & Technology' , value: 'scienceAndTechnology'}]
+}]
+
 
 const uploadPhoto1 = [{
   type: 'upload',
   label: 'Photo',
   name: 'photo',
   required: false,
+  limit:2,
   message: 'Please upload photo'
 }]
 
@@ -24,6 +37,7 @@ const uploadPhoto = [{
   name: 'photo',
   placeholder: 'Photo',
   required: false,
+  limit:1,
   message: 'Please upload photo'
 }]
 const fName = [{
@@ -52,7 +66,6 @@ const fName = [{
       message: 'Please enter valid name',
       type: 'regx',
     }]
-  
   }]
   
   const lName = [{
@@ -88,7 +101,7 @@ const fName = [{
       type: 'radio',
       label: 'Gender',
       name: 'gender',
-      required: true,
+      required: false,
       message: 'Please select gender',
       values: genderValues,
     }]
@@ -113,10 +126,24 @@ const fName = [{
         type: 'birthDate',
         label: 'Birth Date',
         name: 'birthDate',
-        required: true,
+        required: false,
         message: 'Please input date of birth',
         custValidation: [{
     
         }]
       }]
-  const fieldsArr = [ ...uploadPhoto,...uploadPhoto1,  ...fName, ...mName, ...lName, ...email, ...gender, ...rememberMe];
+
+      const password = [{
+        type: 'password',
+        label: 'Password',
+        name: 'password',
+        required: true,
+        placeholder: 'Password',
+        message: 'Please input Password',
+        // custValidation: [{
+        //   validator: "^[a-zA-Z0-9]+$",
+        //   message: 'Please enter valid password',
+        //   type: 'regx',
+        // }]
+      }]
+  const fieldsArr = [ ...uploadPhoto,...uploadPhoto1,  ...fName, ...mName, ...lName, ...email, ...gender, ...fieldsBirthDate, ...areasOfInterests, ...password, ...rememberMe];
