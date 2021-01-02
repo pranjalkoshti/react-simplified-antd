@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Table, Input, Button, Modal, Form, Row, Col, Upload, Checkbox, message, Select, Popconfirm } from 'antd';
 // import Highlighter from 'react-highlight-words';
-import { SearchOutlined, PlusOutlined, DeleteOutlined } from '@ant-design/icons';
+import { SearchOutlined, PlusOutlined, DeleteOutlined, EditOutlined } from '@ant-design/icons';
 import CustomForm from '../form';
 // import { layout } from '../commonImports/import1';
 import moment from 'moment';
@@ -26,7 +26,7 @@ const TableWithForm = (props) => {
   const [data, setdata] = useState([])
   const [previewVisible, setpreviewVisible] = useState(false)
   const [previewImage, setpreviewImage] = useState({})
-  const [initial, setinitial] = useState(false);
+  const [selectedItem, setselectedItem] = useState(null);
   const [custForm] = Form.useForm();
 
 
@@ -64,27 +64,34 @@ const TableWithForm = (props) => {
     if (props.checkDuplicateItem && props.checkDuplicateItem == true && props.uniqueId) {
       let uniqueId = props.uniqueId;
       let flag = arr.find((a)=>a[uniqueId] == values[uniqueId]);
-   
+
       if(flag){
         props.onError('DUPLICATE_ENTRY_EXCEPTION')
       }else{
-        arr.push({ ...values })
-        custForm.resetFields()
-        setvisible(false);
-        setdata(arr);
-        if(props.onChange){
-          props.onChange(arr)
+        if(selectedItem == null){
+          addItem(values)
+        }else{
+          editItem(values)
         }
       }
     } else {
-      arr.push({ ...values })
+      if(selectedItem == null){
+        addItem(values)
+      }else{
+        editItem(values)
+      }
+    }
+  }
+
+  const addItem=(item)=>{
+    let arr = [...data];
+    arr.push({ ...item })
       custForm.resetFields()
       setvisible(false);
       setdata(arr)
       if(props.onChange){
         props.onChange(arr)
       }
-    }
   }
 
 
@@ -92,11 +99,27 @@ const TableWithForm = (props) => {
     let arr = [...data];
     arr.splice(index, 1)
     setdata(arr)
+    setvisible(false);
     if(props.onChange){
       props.onChange(arr)
     }
   }
 
+
+  const editItem = (item) => {
+    let arr = [...data];
+    let index = arr.find((a)=>a.key == item.key)
+    if(index != -1){
+      arr.splice(index, 1, item)
+      setdata(arr)
+      setvisible(false);
+      if(props.onChange){
+        props.onChange(arr)
+      }
+    }
+    setselectedItem(null)
+    custForm.resetFields()
+  }
 
   let a = []
   let columns = props.fields.map((p) => {
@@ -159,15 +182,35 @@ const TableWithForm = (props) => {
       // ...this.getColumnSearchProps(p.name),
     }
   })
-  if(props.showDeleteAction){
 
+
+  if(props.showEditAction){
     a.push(
       {
-        title: 'Action',
-        dataIndex: 'action',
+        title: 'Edit',
+        dataIndex: 'edit',
+        render: (text, record) => (
+            <Button 
+            onClick={()=>{
+              setselectedItem(record)
+              setvisible(true)
+              custForm.setFieldsValue({...record})
+            }}><EditOutlined />
+          </Button>
+       ),
+      }
+    )
+  };
+
+
+  if(props.showDeleteAction){
+    a.push(
+      {
+        title: 'Delete',
+        dataIndex: 'delete',
         render: (text, record) => (
           <Popconfirm placement="topLeft" title={'Are you sure ?'} onConfirm={()=>{
-            deleteItem(record.key, props.setdynamicData, props.name)
+            deleteItem(record.key)
           }} okText="Yes" cancelText="No">
             <Button ><DeleteOutlined />
           </Button>
@@ -175,11 +218,10 @@ const TableWithForm = (props) => {
        ),
       }
     )
-  }
+  };
+
+
   let colarr = [...columns, ...a]
-
-
-
   return (
     <>
       <Row>
@@ -202,9 +244,14 @@ const TableWithForm = (props) => {
         visible={visible}
         onOk={() => {
           setvisible(false)
+          setselectedItem(null)
+          custForm.resetFields()
         }}
         onCancel={() => {
+          // ========= DEBUG - on cancel form values are not resetting 
           setvisible(false)
+          setselectedItem(null)
+          custForm.resetFields()
         }}
         width={'80%'}
         footer={false}
@@ -212,6 +259,7 @@ const TableWithForm = (props) => {
         <Form
           form={custForm}
           // {...layout}
+          // initialValues={selectedItem != null ? {...selectedItem} : {}}
           onFinish={(values) => {
             onFinish(values)
           }}

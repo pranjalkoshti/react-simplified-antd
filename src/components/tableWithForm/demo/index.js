@@ -22,9 +22,7 @@ const TableWithFormDemo=()=>{
               console.log(err)
             }}
             showDeleteAction={true}
-            actions={()=>{
-              
-            }}
+            showEditAction={true}
         />
         </div>
 

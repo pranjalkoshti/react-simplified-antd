@@ -48,7 +48,7 @@ const fName = [{
     placeholder: 'First Name',
     message: 'Please input first name',
     custValidation: [{
-      validator: "^[a-zA-Z]+$",
+      validator: "^[a-zA-Z ]+$",
       message: 'Please enter valid name',
       type: 'regx',
     }]
@@ -62,7 +62,7 @@ const fName = [{
     placeholder: 'Middle Name',
     message: 'Please input middle name',
     custValidation: [{
-      validator: "^[a-zA-Z]+$",
+      validator: "^[a-zA-Z ]+$",
       message: 'Please enter valid name',
       type: 'regx',
     }]
@@ -76,7 +76,7 @@ const fName = [{
     placeholder: 'Last Name',
     message: 'Please input last name',
     custValidation: [{
-      validator: "^[a-zA-Z]+$",
+      validator: "^[a-zA-Z ]+$",
       message: 'Please enter valid name',
       type: 'regx',
     }]
