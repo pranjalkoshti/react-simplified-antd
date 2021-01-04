@@ -1,6 +1,5 @@
 import React, { Component, Fragment, useState } from "react";
-import DynamicFieldSet from '../index';
-import * as fields from '../../form/demo/fields';
+import DynamicFieldSet from '../../components/dynamicField';
 import { Button, Form } from 'antd';
 
 const DynamicFieldsDemo=()=>{

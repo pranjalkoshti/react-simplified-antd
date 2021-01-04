@@ -69,7 +69,8 @@ const uploadPhoto = [{
   required: false,
   limit:1,
   message: 'Please upload photo'
-}]
+}];
+
 const fName = [{
     type: 'input',
     label: 'First Name',

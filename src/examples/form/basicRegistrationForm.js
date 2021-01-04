@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import CustomForm from '../index';
+import CustomForm from '../../components/form';
 import * as fields from './fields';
 import { Button, Form, Card } from 'antd'
 
