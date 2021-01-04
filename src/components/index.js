@@ -1,12 +1,12 @@
 import '../assets/css/main.css';
-import CustomForm from './form'
+import FormItem from './form'
 import DynamicFieldSet from './dynamicField'
 import TableWithForm from './tableWithForm';
 import BirthDateComp from './birthDate'
 
 
 export { 
-  CustomForm,
+  FormItem,
   DynamicFieldSet,
   TableWithForm,
   BirthDateComp
