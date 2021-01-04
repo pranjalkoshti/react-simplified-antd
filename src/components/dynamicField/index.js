@@ -36,12 +36,8 @@ const DynamicFieldSet = (props) => {
     })
   }, []);
 
-
-
-  const rules = [{ required: true }];
-  // console.log('props',props)
   return (
-    <Form.List name={mainField.name} rules={rules} >
+    <Form.List name={mainField.name}>
     {(fields, { add, remove ,move}) => {
     
       return (

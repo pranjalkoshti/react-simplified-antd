@@ -8,7 +8,37 @@ export {
     fieldsBirthDate,
     areasOfInterests
 }
-const genderValues = ['MALE', 'FEMALE', 'OTHER']
+const genderValues = ['MALE', 'FEMALE', 'OTHER'];
+
+
+let documents = [
+  {
+      type: 'dynamicFieldSet',
+      label: 'Document',
+      name: 'documents',
+      showlabel: true,
+      fields:[{
+          type: 'input',
+          label: 'Name',
+          name: 'name',
+          required: true,
+          placeholder: 'Name',
+          message: 'Please input name',
+          custValidation: [{
+            validator: "^[a-zA-Z ]+$",
+            message: 'Please enter valid name',
+            type: 'regx',
+          }]
+        },
+        {
+          type: 'upload-picture',
+          label: 'Upload',
+          name: 'upload',
+          required: true,
+          limit:1,
+          message: 'Please upload document'
+        }]
+  }]
 
 
 const areasOfInterests = [{
@@ -146,4 +176,4 @@ const fName = [{
         //   type: 'regx',
         // }]
       }]
-  const fieldsArr = [ ...uploadPhoto,...uploadPhoto1,  ...fName, ...mName, ...lName, ...email, ...gender, ...fieldsBirthDate, ...areasOfInterests, ...password, ...rememberMe];
+  const fieldsArr = [ ...uploadPhoto,...uploadPhoto1,  ...fName, ...mName, ...lName, ...email, ...gender, ...fieldsBirthDate, ...areasOfInterests, ...password, ...documents, ...rememberMe];

@@ -319,10 +319,10 @@ const CustomForm = (props) => {
           </Select>)
         break;
 
-      case 'multi':
-        elem = (
-          <DynamicFieldSet field={p} />)
-        break;
+      // case 'multi':
+      //   elem = (
+      //     <DynamicFieldSet field={p} />)
+      //   break;
 
       case 'datepicker':
         elem = (
@@ -380,6 +380,11 @@ const CustomForm = (props) => {
             }
           }} />)
         break;
+
+        case 'dynamicFieldSet':
+          elem=(
+            <DynamicFieldSet field={[p]}/>
+          )
       default:
     }
     return elem

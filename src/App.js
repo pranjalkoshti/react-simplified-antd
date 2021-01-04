@@ -7,8 +7,8 @@ import DynamicFieldSetExample from './components/dynamicField/demo'
 function App(props){
 
     return (
-    //    <FormExample/>
-    <DynamicFieldSetExample/>
+       <FormExample/>
+    // <DynamicFieldSetExample/>
     )
 }
 export default App;
