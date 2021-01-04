@@ -1,18 +1,20 @@
 ### React Antd Simplified
 
+A react UI library on top of antd, for making life easier while using Ant Design;
+
 
 You can install the module via npm:
 
- `npm install react-countdown-customizable --save`
+ `npm install react-antd-simplified --save`
 
 
-### Usage
+<!-- ### Usage
 For using counter with standard styles - 
 
 ```
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Counter from 'react-countdown-customizable';
+import Counter from 'react-antd-simplified';
  
 ReactDOM.render(
   <Counter 
@@ -27,7 +29,7 @@ For applying custom styles for labels, counter or timer component itself
 ```
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Counter from 'react-countdown-customizable';
+import Counter from 'react-antd-simplified';
  
 ReactDOM.render(
    <Counter 
@@ -48,5 +50,5 @@ ReactDOM.render(
 | date  | String  | date 24 Hrs from now |
 | timerStyle | style Object | undefined | 
 | counterStyle | style Object | undefined | 
-| labelStyle | style Object | undefined | 
+| labelStyle | style Object | undefined |  -->
 
