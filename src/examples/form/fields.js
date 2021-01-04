@@ -129,7 +129,7 @@ const fName = [{
 
   const gender = [
     {
-      type: 'radio',
+      type: ' ',
       label: 'Gender',
       name: 'gender',
       required: false,

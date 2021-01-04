@@ -8,7 +8,7 @@ You can install the module via npm:
  `npm install react-antd-simplified --save`
 
 
-### Usage 
+### Usage - FormItem
 
 ```
 import React from "react";
@@ -40,7 +40,7 @@ export default function App() {
 }
 ```
 
-Where fields objects some examples are as below
+Some examples of fields objects are as below
 
 ```
 const fName = [{
@@ -55,47 +55,138 @@ const fName = [{
       message: 'Please enter valid name',
       type: 'regx',
     }]
-}]
+}];
 
-let documents = [
-  {
-      type: 'dynamicFieldSet',
-      label: 'Document',
-      name: 'documents',
-      showlabel: true,
-      fields:[{
-          type: 'input',
-          label: 'Name',
-          name: 'name',
-          required: true,
-          placeholder: 'Name',
-          message: 'Please input name',
-          custValidation: [{
-            validator: "^[a-zA-Z ]+$",
-            message: 'Please enter valid name',
-            type: 'regx',
-          }]
-        },
-        {
-          type: 'upload-picture',
-          label: 'Upload',
-          name: 'upload',
-          required: true,
-          limit:1,
-          message: 'Please upload document'
-        }]
+const areasOfInterests = [{
+    type: 'multiselect',
+    label: 'Areas of Interest',
+    name: 'areasOfInterest',
+    required: false,
+    message: 'Please upload photo',
+    values:[{label: 'Politics', value:'politics'}, { label: 'Science & Technology' , value: 'scienceAndTechnology'}]
   }]
-
-  const areasOfInterests = [{
-      type: 'multiselect',
-      label: 'Areas of Interest',
-      name: 'areasOfInterest',
-      required: false,
-      message: 'Please upload photo',
-      values:[{label: 'Politics', value:'politics'}, { label: 'Science & Technology' , value: 'scienceAndTechnology'}]
-    }]
 
 ```
 
-### You can find working example and field props for each field here, also find more examples in github repository
+Currently we support field types ``` input, number, textarea, select, multiselect, radio, checkbox, birthDate, password, upload, upload-picture, dynamicFieldSet ```; 
+
+### You can find working example
+To find more examples and field props for each field, check github repository
+
 [live](https://codesandbox.io/s/infallible-lake-b797g?file=/src/styles.css)
+
+
+### Usage - Table With Form
+
+Table with fully functional form with edit and delete functionality; 
+
+```
+import React, { Component, Fragment, useState } from "react";
+import { TableWithForm } from 'react-antd-simplified';
+import * as fields from '../form/fields';
+import { Form } from 'antd';
+
+const TableWithFormDemo=()=>{
+  const [form] = Form.useForm();
+  const [data, setdata] = useState([{fName:'Prachi',lName:'Patil',emailId:'prachi@example.com'}]);
+
+    return(
+        <div style={{width:'100%',margin:'auto', padding:'20px',marginTop:'40px'}}>
+          <h2>Table with Form</h2>
+          <TableWithForm
+            fields={[...fields.fName, ...fields.mName, ...fields.lName, ...fields.email]}
+            formColumns={4}
+            checkDuplicateItem={true}
+            uniqueId={'emailId'} // == this should be name of unique field being used in data 
+            initialData={data}
+            onChange={(data) => {
+              setdata(data)
+            }}
+            onError={(err)=>{
+              console.log(err)
+            }}
+            formAlign="MODAL" // ---- 'MODAL' || 'INLINE'
+            showDeleteAction={true}
+            showEditAction={true}
+        />
+        </div>
+    )
+}
+
+export default TableWithFormDemo;
+```
+### Demo
+[live](https://codesandbox.io/s/infallible-lake-b797g?file=/src/styles.css);
+
+
+### Usage - DynamicFieldSet 
+
+```
+import React, { Component, Fragment, useState } from "react";
+import { DynamicFieldSet } from 'react-antd-simplified';
+import { Button, Form } from 'antd';
+
+const DynamicFieldsDemo=()=>{
+  const [form] = Form.useForm();
+
+
+  let demoField = [
+    {
+        type: 'multi',
+        label: 'Response',
+        name: 'responseCapture',
+        showlabel: true,
+        fields:[{
+            type: 'input',
+            label: 'Name',
+            name: 'name',
+            required: true,
+            placeholder: 'Name',
+            message: 'Please input name',
+            custValidation: [{
+              validator: "^[a-zA-Z ]+$",
+              message: 'Please enter valid name',
+              type: 'regx',
+            }]
+          },
+          {
+            type: 'multiselect',
+            label: 'Areas of Interest',
+            name: 'areasOfInterest',
+            required: false,
+            message: 'Please upload photo',
+            values:[{label: 'Politics', value:'politics'}, { label: 'Science & Technology' , value: 'scienceAndTechnology'}]
+          }]
+    }]
+
+
+    return(
+        <Form
+            form={form}
+            initialValues={{rememberMe:['Remember Me']}}
+            onFinish={(values) => {
+                console.log(values)
+            }}
+            onFinishFailed={(errorInfo) => {
+                console.log(errorInfo)
+            }}
+        >
+            <DynamicFieldSet
+              field={demoField}
+            />
+            <Button type="primary" htmlType="submit">Submit</Button>
+        </Form>
+    )
+}
+
+export default DynamicFieldsDemo;
+```
+
+### Demo
+[live](https://codesandbox.io/s/infallible-lake-b797g?file=/src/styles.css);
+
+
+
+
+
+

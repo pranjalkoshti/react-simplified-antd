@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Layout, Menu, Breadcrumb, Divider } from 'antd';
+import { Layout, Menu, Breadcrumb, Divider, InputNumber } from 'antd';
 import { UserOutlined, LaptopOutlined, NotificationOutlined, UploadOutlined } from '@ant-design/icons';
 import { Form, Input, Button, Checkbox, Row, Col, Upload, Radio, Select, DatePicker } from 'antd';
 import validateFields, { FormProps } from 'antd/lib/form'
@@ -228,6 +228,10 @@ const CustomForm = (props) => {
 
         <Checkbox value={p.name}>{p.option != undefined ? p.option : p.label}</Checkbox>
         )
+        break;
+        
+        case 'number':
+          elem = (<InputNumber placeholder={p.name} />)
         break;
 
       case 'password':
