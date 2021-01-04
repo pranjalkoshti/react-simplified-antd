@@ -46,7 +46,7 @@ Here ```fields``` props for ```FormItem``` is an array object.
 Some examples of fields objects are as below
 
 ```
-const fName = [{
+const fieldsArr = [{
     type: 'input',
     label: 'First Name',
     name: 'fName',
@@ -58,9 +58,7 @@ const fName = [{
       message: 'Please enter valid name',
       type: 'regx',
     }]
-}];
-
-const areasOfInterests = [{
+},{
     type: 'multiselect',
     label: 'Areas of Interest',
     name: 'areasOfInterest',

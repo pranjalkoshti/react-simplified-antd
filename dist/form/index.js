@@ -1,7 +1,7 @@
 function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
 
 import React, { useState } from 'react';
-import { Layout, Menu, Breadcrumb, Divider } from 'antd';
+import { Layout, Menu, Breadcrumb, Divider, InputNumber } from 'antd';
 import { UserOutlined, LaptopOutlined, NotificationOutlined, UploadOutlined } from '@ant-design/icons';
 import { Form, Input, Button, Checkbox, Row, Col, Upload, Radio, Select, DatePicker } from 'antd';
 import validateFields, { FormProps } from 'antd/lib/form';
@@ -222,6 +222,12 @@ const CustomForm = props => {
         })) : /*#__PURE__*/React.createElement(Checkbox, {
           value: p.name
         }, p.option != undefined ? p.option : p.label);
+        break;
+
+      case 'number':
+        elem = /*#__PURE__*/React.createElement(InputNumber, {
+          placeholder: p.name
+        });
         break;
 
       case 'password':
