@@ -1,4 +1,4 @@
-import '../assets/css/main.css';
+import './assets/css/main.css';
 import FormItem from './form'
 import DynamicFieldSet from './dynamicField'
 import TableWithForm from './tableWithForm';
