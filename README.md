@@ -8,47 +8,94 @@ You can install the module via npm:
  `npm install react-antd-simplified --save`
 
 
-<!-- ### Usage
-For using counter with standard styles - 
+### Usage 
 
 ```
-import React from 'react';
-import ReactDOM from 'react-dom';
-import Counter from 'react-antd-simplified';
- 
-ReactDOM.render(
-  <Counter 
-    date="2021-01-10T14:48:00" 
-  />,
-  document.getElementById('root')
-);
+import React from "react";
+import * as fields from "./fields";
+import { Button, Form } from "antd";
+import { FormItem } from "react-antd-simplified";
+
+export default function App() {
+  const [form] = Form.useForm();
+  return (
+    <Form
+      form={form}
+      initialValues={{ rememberMe: ["Remember Me"] }}
+      onFinish={(values) => {
+        console.log(values);
+      }}
+      onFinishFailed={(errorInfo) => {
+        console.log(errorInfo);
+      }}
+    >
+      <h2>User Registration</h2>
+      {/* fields props is an array of object */}
+      <FormItem form={form} columns={2} fields={fields.fieldsArr} />
+      <Button type="primary" htmlType="submit">
+        Register
+      </Button>
+    </Form>
+  );
+}
 ```
 
-For applying custom styles for labels, counter or timer component itself 
+Where fields objects some examples are as below
 
 ```
-import React from 'react';
-import ReactDOM from 'react-dom';
-import Counter from 'react-antd-simplified';
- 
-ReactDOM.render(
-   <Counter 
-        date="2021-01-10T14:48:00" 
-        timerStyle={{marginTop:'10px', width:'20%'}} 
-        counterStyle={{fontSize:'15px', color:'white', border:'1px solid red', padding:'10px', margin:'5px', backgroundColor:'red'}} 
-        labelStyle={{color:'grey',fontSize:'12px', textTransform:'uppercase'}}
-    /> ,
-  document.getElementById('root')
+const fName = [{
+    type: 'input',
+    label: 'First Name',
+    name: 'fName',
+    required: true,
+    placeholder: 'First Name',
+    message: 'Please input first name',
+    custValidation: [{
+      validator: "^[a-zA-Z ]+$",
+      message: 'Please enter valid name',
+      type: 'regx',
+    }]
+}]
+
+let documents = [
+  {
+      type: 'dynamicFieldSet',
+      label: 'Document',
+      name: 'documents',
+      showlabel: true,
+      fields:[{
+          type: 'input',
+          label: 'Name',
+          name: 'name',
+          required: true,
+          placeholder: 'Name',
+          message: 'Please input name',
+          custValidation: [{
+            validator: "^[a-zA-Z ]+$",
+            message: 'Please enter valid name',
+            type: 'regx',
+          }]
+        },
+        {
+          type: 'upload-picture',
+          label: 'Upload',
+          name: 'upload',
+          required: true,
+          limit:1,
+          message: 'Please upload document'
+        }]
+  }]
+
+  const areasOfInterests = [{
+      type: 'multiselect',
+      label: 'Areas of Interest',
+      name: 'areasOfInterest',
+      required: false,
+      message: 'Please upload photo',
+      values:[{label: 'Politics', value:'politics'}, { label: 'Science & Technology' , value: 'scienceAndTechnology'}]
+    }]
+
 ```
-### Demo
-[live](https://codesandbox.io/s/strange-glitter-2biqw?file=/src/App.js)
 
-### Props
-
-| Name  | Type | Default |
-| ------------- | ------------- | ------------- | 
-| date  | String  | date 24 Hrs from now |
-| timerStyle | style Object | undefined | 
-| counterStyle | style Object | undefined | 
-| labelStyle | style Object | undefined |  -->
-
+### You can find working example and field props for each field here, also find more examples in github repository
+[live](https://codesandbox.io/s/infallible-lake-b797g?file=/src/styles.css)
