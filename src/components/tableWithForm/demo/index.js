@@ -12,8 +12,9 @@ const TableWithFormDemo=()=>{
           <h2>Table with Form</h2>
           <TableWithForm
             fields={[...fields.fName, ...fields.mName, ...fields.lName, ...fields.email]}
+            formColumns={4}
             checkDuplicateItem={true}
-            uniqueId={'emailId'}
+            uniqueId={'emailId'} // == this should be name of unique field being used in data 
             initialData={data}
             onChange={(data) => {
               setdata(data)
@@ -21,6 +22,7 @@ const TableWithFormDemo=()=>{
             onError={(err)=>{
               console.log(err)
             }}
+            formAlign="MODAL" // ---- 'MODAL' || 'INLINE'
             showDeleteAction={true}
             showEditAction={true}
         />

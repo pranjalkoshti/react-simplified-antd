@@ -220,11 +220,52 @@ const TableWithForm = (props) => {
     )
   };
 
+  const renderForm=()=>{
+    return(
+      <Form
+      form={custForm}
+      // {...layout}
+      // initialValues={selectedItem != null ? {...selectedItem} : {}}
+      onFinish={(values) => {
+        onFinish(values)
+      }}
+      onFinishFailed={(errorInfo) => {
+        console.log(errorInfo)
+      }}>
+      <CustomForm
+        columns={props.formColumns ? props.formColumns : 3}
+        fields={props.fields}
+      />
+      <Button
+        type="primary"
+        htmlType="submit"
+        style={{ marginRight: 10 }}
+      >
+        Save
+      </Button>
+      <Button
+        onClick={() => {
+          setvisible(false)
+        }}
+      >
+        Cancel
+        </Button>
+
+    </Form>
+    )
+  }
+
 
   let colarr = [...columns, ...a]
   return (
     <>
-      <Row>
+      <Row style={{marginBottom:'20px'}}>
+        {props.formAlign && props.formAlign == 'INLINE' ? 
+        <Col span={24}>
+        { renderForm()}
+        </Col>
+        
+        :
         <Col span={6} offset={18} style={{ textAlign: 'right', marginBottom: 10 }}>
           <Button 
           type="primary"
@@ -235,9 +276,11 @@ const TableWithForm = (props) => {
             Add
             </Button>
         </Col>
+        }
       </Row>
 
       <Table columns={colarr} dataSource={data} size="small" />
+      {!props.formAlign || props.formAlign =='MODAL' && 
       <Modal
         title="Add Details"
         destroyOnClose
@@ -256,37 +299,10 @@ const TableWithForm = (props) => {
         width={'80%'}
         footer={false}
       >
-        <Form
-          form={custForm}
-          // {...layout}
-          // initialValues={selectedItem != null ? {...selectedItem} : {}}
-          onFinish={(values) => {
-            onFinish(values)
-          }}
-          onFinishFailed={(errorInfo) => {
-            console.log(errorInfo)
-          }}>
-          <CustomForm
-            columns={3}
-            fields={props.fields}
-          />
-          <Button
-            type="primary"
-            htmlType="submit"
-            style={{ marginRight: 10 }}
-          >
-            Save
-          </Button>
-          <Button
-            onClick={() => {
-              setvisible(false)
-            }}
-          >
-            Cancel
-            </Button>
-
-        </Form>
+       {renderForm()}
       </Modal>
+}
+      
     </>
   )
 

@@ -7,143 +7,29 @@ import DynamicFieldSet from '../dynamicField';
 import BirthDateComp from '../birthDate';
 import moment from 'moment';
 
-// import { gutter, calculateSpan } from '../commonImports/responsiveSettings';
-// import PhoneInput from 'react-phone-input-2'
-
 const { Option } = Select;
 const { RangePicker } = DatePicker;
 const dateFormat = 'YYYY/MM/DD';
 
-// direction - optional 
-// columns - optional
 
-
-const tailLayout = {
-  wrapperCol: { offset: 20, span: 4 },
+const formItemLayout = {
+  labelCol: {
+    xs: { span: 24 },
+    sm: { span: 24 },
+  },
+  wrapperCol: {
+    xs: { span: 24 },
+    sm: { span: 24 },
+  },
 };
-
-
-const onFinish = (values, props) => {
-  // console.log('Success:', values);
-  if (props.setFormValues && props.handleSubmit) {
-
-    props.setFormValues(values)
-    props.handleSubmit(values)
-  }
-};
-
-const onFinishFailed = (errorInfo, props) => {
-  console.log('Failed:', errorInfo);
-  if (props.handleError) {
-    props.handleError(errorInfo)
-  }
-};
-
-// const fields = [
-//   {
-//     type:'input',
-//     label: 'Username',
-//     name:'username',
-//     required:true,
-//     message:'Please input username',
-//     custValidation:[{
-
-//     }]
-//   },
-//   {
-//     type:'input',
-//     label: 'Email',
-//     name:'userEmail',
-//     required:true,
-//     message:'Please input email',
-//     custValidation:[{
-
-//     }]
-//   },
-//   {
-//     type:'password',
-//     label: 'Password',
-//     name:'password',
-//     required:true,
-//     message:'Please input password',
-//     custValidation:[{
-
-//     }]
-//   },
-//   {
-//     type:'input',
-//     label: 'Username',
-//     name:'username',
-//     required:false,
-//     message:'Please input username',
-//     custValidation:[{
-
-//     }]
-//   },
-//   {
-//     type:'upload',
-//     label: 'Photo Upload',
-//     name:'userPhoto',
-//     required:true,
-//     message:'Please input email',
-//     custValidation:[{
-
-//     }]
-//   },
-//   {
-//     type:'checkbox',
-//     label: 'Remember Me',
-//     name:'remember',
-//     required:false,
-//     message:'Please input password',
-//     custValidation:[{
-
-//     }]
-//   }
-// ]
-
-// const initialValues = {
-//   password:'password',
-//   userEmail:'abc@gmail.com',
-//   remember:true
-// }
-
-const callCustValidation = (form) => {
-  form.validateFields()
-    .then((values) => {
-      console.log(values)
-    })
-    .catch((errorInfo) => {
-      console.log(errorInfo)
-      /*
-      errorInfo:
-        {
-          values: {
-            username: 'username',
-            password: 'password',
-          },
-          errorFields: [
-            { password: ['username'], errors: ['Please input your Password!'] },
-          ],
-          outOfDate: false,
-        }
-      */
-    });
-}
-
-
-
-const CustomForm = (props) => {
+const DynamicFieldFormItem = (props) => {
   const [form] = Form.useForm();
 
   const [uploadList, setuploadList] = useState(props.photoArr ? props.photoArr : [])
   const [uploadListPicture, setuploadListPicture] = useState(props.photoArr ? props.photoArr : [])
 
-
-
-  // validateFields(props)
   let span = 24;
-  // console.log(form)
+
   if (props.columns && props.columns == 2) {
     span = 12
   }
@@ -385,102 +271,50 @@ const CustomForm = (props) => {
     return elem
   }
 
+  let p = props.f;
+
+  let { name, index, fieldKey } = props;
+
+
   return (
-    //   <Form
-    //     {...layout}
-    //     name="basic"
-    //     initialValues={props.initialValues}
-    //     onFinish={(values)=>{
-    //       onFinish(values,props)}}
-    //     onFinishFailed={(errorInfo)=>{
-    //       onFinishFailed(errorInfo, props)}}
-    // >
+
     <>
-      <Row gutter={32}>
-        {/* <div style={{display:'flex',flexDirection:'column', flexWrap:'wrap', justifyContent:'space-between'}}> */}
-        {props.fields && props.fields.map((p) => {
-          // console.log('phjgjh',p)
-        let elem = renderElement(p)
-
-          return (
-            <>
-              <Col span={span}
-              // xs={calculateSpan(span, 'xs')} 
-              // sm={calculateSpan(span, 'sm')} 
-              // md={calculateSpan(span, 'md')} 
-              // lg={calculateSpan(span, 'lg')} 
-              // xl={calculateSpan(span, 'xl')} 
-              // xxl={calculateSpan(span, 'xxl')}
-              >
+ 
                 <Form.Item
-                  colon={false}
-                  labelAlign="right"
-                  {...layout}
-                  label={p.showlabel == undefined || (p.showlabel != undefined && p.showlabel == true) ? p.label : null}
-                  name={p.name}
-                  // valuePropName={'checked'}
-                  rules={
-                    [
-                      {
-                        required: p.required,
-                        message: p.message ? p.message : p.placeholder ? `please input ${p.placeholder}` : ''
-                      },
-                      ({ getFieldValue }) => ({
-                        validator: (rule, value) => {
-                          if (value) {
-                            // console.log('p.custValidation && p.custValidation[0]',p.custValidation && p.custValidation[0])
-                            if (p.custValidation && p.custValidation[0] && p.custValidation[0].type == 'regx') {
-                              if (!value.match(p.custValidation[0].validator)) {
-                                return Promise.reject(`${p.custValidation[0].message}`);
+                    {...formItemLayout}
+                      labelAlign={'left'}
+                      style={{ flex: 1, margin:'5px 1px' }}
+                      label={index === 0 ? p.label : ''}
+                      name={name}
+                      fieldKey={fieldKey}
+                      // rules={[{ required: p.required, message: p.message }]}
+                      rules={
+                        [
+                          {
+                            required: p.required,
+                            message: p.message ? p.message : p.placeholder ? `please input ${p.placeholder}` : ''
+                          },
+                          ({ getFieldValue }) => ({
+                            validator: (rule, value) => {
+                              if (value) {
+                                // console.log('p.custValidation && p.custValidation[0]',p.custValidation && p.custValidation[0])
+                                if (p.custValidation && p.custValidation[0] && p.custValidation[0].type == 'regx') {
+                                  if (!value.match(p.custValidation[0].validator)) {
+                                    return Promise.reject(`${p.custValidation[0].message}`);
+                                  }
+                                }
                               }
+                              return Promise.resolve();
+                              // console.log('value')
                             }
-                          }
-                          return Promise.resolve();
-                          // console.log('value')
-                        }
-                      })
-                      // ({ getFieldValue }) => ({
-                      //   validator(rule, value ,cb) {
-                      //     // console.log(rule,value,cb)
-                      //     return Promise.resolve();
-                      //     // if (!value || getFieldValue('password') === value) {
-                      //     //   return Promise.resolve();
-                      //     // }
-
-                      //     // return Promise.reject('The two passwords that you entered do not match!');
-                      //   },
-                      // }),
-                    ]}
+                          })
+                        ]}
                 >
-                  {elem}
+                 {renderElement(p)}
                 </Form.Item>
-              </Col>
-              {p.divider &&
 
-                <Divider />
-              }
-            </>
-          )
-
-        })}
-      </Row>
-      {/* </div> */}
-
-      {props.render ? props.render() : null}
-
-      {/* <Form.Item {...tailLayout} style={{textAlign:'right'}}>
-          <Button type="primary" 
-          htmlType="submit"
-          // onClick={()=>{
-            //   callCustValidation(form)
-            // }}
-            >
-            {props.buttonName ? props.buttonName : 'Save'}
-            </Button>
-          </Form.Item> */}
-      {/* </Form> */}
     </>
   )
 }
 
-export default CustomForm
+export default DynamicFieldFormItem
