@@ -117,7 +117,7 @@ const TableWithFormDemo=()=>{
 export default TableWithFormDemo;
 ```
 ### Demo
-[live](https://codesandbox.io/s/infallible-lake-b797g?file=/src/styles.css)
+[live](https://codesandbox.io/s/beautiful-butterfly-p4j8c)
 
 
 ### Usage - DynamicFieldSet 
@@ -184,7 +184,7 @@ export default DynamicFieldsDemo;
 ```
 
 ### Demo
-[live](https://codesandbox.io/s/infallible-lake-b797g?file=/src/styles.css)
+[live](https://codesandbox.io/s/beautiful-butterfly-p4j8c)
 
 
 
