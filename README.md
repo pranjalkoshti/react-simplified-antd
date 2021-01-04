@@ -1,6 +1,6 @@
 ### React Antd Simplified
 
-A react UI library on top of antd, for making life easier while using Ant Design;
+A react UI library on top of antd, for making life easier while using Ant Design.
 
 
 You can install the module via npm:
@@ -30,8 +30,11 @@ export default function App() {
       }}
     >
       <h2>User Registration</h2>
-      {/* fields props is an array of object */}
-      <FormItem form={form} columns={2} fields={fields.fieldsArr} />
+      <FormItem 
+        form={form} 
+        columns={2} 
+        fields={fields.fieldsArr} 
+      />
       <Button type="primary" htmlType="submit">
         Register
       </Button>
@@ -39,7 +42,7 @@ export default function App() {
   );
 }
 ```
-
+Here ```fields``` props for ```FormItem``` is an array object. 
 Some examples of fields objects are as below
 
 ```
@@ -78,7 +81,7 @@ To find more examples and field props for each field, check github repository
 
 ### Usage - Table With Form
 
-Table with fully functional form with edit and delete functionality; 
+Table with fully functional form with edit and delete functionality.
 
 ```
 import React, { Component, Fragment, useState } from "react";
@@ -116,7 +119,7 @@ const TableWithFormDemo=()=>{
 export default TableWithFormDemo;
 ```
 ### Demo
-[live](https://codesandbox.io/s/infallible-lake-b797g?file=/src/styles.css);
+[live](https://codesandbox.io/s/infallible-lake-b797g?file=/src/styles.css)
 
 
 ### Usage - DynamicFieldSet 
@@ -183,7 +186,7 @@ export default DynamicFieldsDemo;
 ```
 
 ### Demo
-[live](https://codesandbox.io/s/infallible-lake-b797g?file=/src/styles.css);
+[live](https://codesandbox.io/s/infallible-lake-b797g?file=/src/styles.css)
 
 
 
